@@ -482,6 +482,8 @@ Slot.libs.SlotAlgorithm = {
 
     end,
 
+   
+
 
     prePareData = function(self, modulename, arg)
 
@@ -490,7 +492,7 @@ Slot.libs.SlotAlgorithm = {
         self._reeldata = Slot.DM:getReelData(modulename, 18)  -- 18个轮子
         self._commomdata = Slot.DM:getCommonData()
         data['LineNum'] = #self._reeldata.lines
-        data['bet'] = arg.bet
+        data['bet'] = self:confirmBet()
         data['profile'] = arg
         data['config'] = self._reeldata.config[1]
 
@@ -717,7 +719,7 @@ Slot.libs.SlotAlgorithm = {
 
 --        handle profile
         local arg = Slot.DM:getBaseProfile()
-        arg.exp = arg.exp + arg.bet * #self._reeldata.lines
+        arg.exp = arg.exp + self:confirmBet() * #self._reeldata.lines
 
         local levelup_data = Slot.DM:getCommonDataByKey("levelup_data")
         local levelup_award = 0
@@ -725,7 +727,7 @@ Slot.libs.SlotAlgorithm = {
             arg.level = arg.level + 1
             levelup_award = levelup_data[arg.level].bonus
         end
-        arg.coin = arg.coin + levelup_award + self.output.awardGold - arg.bet * #self._reeldata.lines
+        arg.coin = arg.coin + levelup_award + self.output.awardGold - self:confirmBet() * #self._reeldata.lines
 
         if self.output.bonus >= 0 then
 
@@ -755,7 +757,7 @@ Slot.libs.SlotAlgorithm = {
         local arg = Slot.DM:getBaseProfile()
 
         self.output_log['cur_level'] = arg.level
-        self.output_log['cur_bet'] = arg.bet
+        self.output_log['cur_bet'] = self:confirmBet()
         self.output_log['cur_coin'] = arg.coin
         self.output_log['cur_exp'] = arg.exp
         self.output_log['cur_win_times'] = arg.continuwin
@@ -791,6 +793,18 @@ Slot.libs.SlotAlgorithm = {
 
         self:handleData()
 
+    end,
+
+    -- confirm Bet Number
+    confirmBet = function(self)
+        local arg = Slot.DM:getBaseProfile()
+
+        local confirmBetNumber = arg.bet
+        if arg.bet == -1 then
+            local levelup_data = Slot.DM:getCommonDataByKey("levelup_data")
+            confirmBetNumber = levelup_data[arg.level].bet
+        end
+        return confirmBetNumber
     end,
 
     runGames = function(self)
