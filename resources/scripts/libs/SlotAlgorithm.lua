@@ -717,7 +717,12 @@ Slot.libs.SlotAlgorithm = {
 
 --        handle profile
         local arg = Slot.DM:getBaseProfile()
-        arg.exp = arg.exp + self:confirmBet() * #self._reeldata.lines
+--      free spin don't increase exp
+        if arg.isFreeSpin > 0 then
+            arg.exp = arg.exp
+        else
+            arg.exp = arg.exp + self:confirmBet() * #self._reeldata.lines
+        end
 
         local levelup_data = Slot.DM:getCommonDataByKey("levelup_data")
         local levelup_award = 0
@@ -725,12 +730,15 @@ Slot.libs.SlotAlgorithm = {
             arg.level = arg.level + 1
             levelup_award = levelup_data[arg.level].bonus
         end
-        arg.coin = arg.coin + levelup_award + self.output.awardGold - self:confirmBet() * #self._reeldata.lines
+--      free spin don't cost coins
+        if arg.isFreeSpin > 0 then
+            arg.coin = arg.coin + levelup_award + self.output.awardGold
+        else
+            arg.coin = arg.coin + levelup_award + self.output.awardGold - self:confirmBet() * #self._reeldata.lines
+        end
 
         if self.output.bonus >= 0 then
-
             arg.coin = arg.coin + arg.bonus_coin
-
         end
 
         if arg.isFreeSpin > 0 then
