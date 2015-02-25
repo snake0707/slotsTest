@@ -482,8 +482,6 @@ Slot.libs.SlotAlgorithm = {
 
     end,
 
-   
-
 
     prePareData = function(self, modulename, arg)
 
