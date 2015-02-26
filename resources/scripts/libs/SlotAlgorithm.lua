@@ -736,8 +736,8 @@ Slot.libs.SlotAlgorithm = {
         else
             arg.coin = arg.coin + levelup_award + self.output.awardGold - self:confirmBet() * #self._reeldata.lines
         end
-
-        if self.output.bonus >= 0 then
+--      change bonus coin add
+        if self.output.bonus > 0 then
             arg.coin = arg.coin + arg.bonus_coin
         end
 
