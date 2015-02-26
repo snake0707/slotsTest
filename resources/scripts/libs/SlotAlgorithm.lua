@@ -738,7 +738,7 @@ Slot.libs.SlotAlgorithm = {
         end
 --      change bonus coin add
         if self.output.bonus > 0 then
-            arg.coin = arg.coin + arg.bonus_coin
+            arg.coin = arg.coin + arg.bonus_coin *self:confirmBet()
         end
 
         if arg.isFreeSpin > 0 then
