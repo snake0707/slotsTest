@@ -817,7 +817,9 @@ Slot.libs.SlotAlgorithm = {
 
         local arg = Slot.DM:getBaseProfile()
 
-        while(arg.spinnum > 0 or arg.isFreeSpin > 0) do
+--        local notEnoughCoins = arg.cur_coin - self:confirmBet() * #self._reeldata.lines
+
+        while((arg.spinnum > 0 or arg.isFreeSpin > 0) and arg.coin > 0) do
             self:runGame(arg.modulename)
             arg = Slot.DM:getBaseProfile()
             U:debug("==>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
