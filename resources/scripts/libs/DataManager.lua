@@ -499,10 +499,10 @@ Slot.libs.DataManager.initLocalDB = function(self)
         sq:createTblByStr("tbl_baseprofile",
             'id integer NOT NULL PRIMARY KEY AUTOINCREMENT,\
             level integer  NOT NULL DEFAULT 1,\
-            exp integer  NOT NULL DEFAULT 1,\
+            exp integer  NOT NULL DEFAULT 0,\
             bet integer  NOT NULL DEFAULT 1,\
             coin integer  NOT NULL DEFAULT 1000,\
-            bonus_coin integer  NOT NULL DEFAULT 0,\
+            bonus_coin integer  NOT NULL DEFAULT 300,\
             continuwin integer  NOT NULL DEFAULT 0,\
             continuclose integer  NOT NULL DEFAULT 0, \
             isFreeSpin integer  NOT NULL DEFAULT 0, \
